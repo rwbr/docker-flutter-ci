@@ -10,7 +10,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 ARG with_emulator=true
 ARG with_gradle=false
-ARG gradle_version=7.0.2
+ARG gradle_version=7.2
 ARG vnc_password=1234
 
 ENV WITH_EMULATOR=$with_emulator
@@ -77,12 +77,12 @@ RUN sdkmanager tools platform-tools emulator "patcher;v4"
 
 RUN yes | sdkmanager "platforms;android-$ANDROID_PLATFORM_VERSION" "build-tools;$ANDROID_BUILD_TOOLS_VERSION" "extras;google;m2repository" "extras;android;m2repository"
 
-RUN wget -O /tmp/setup_for_emulator.sh https://raw.githubusercontent.com/bitsydarel/flutter-ci/master/scripts/setup_for_emulator.sh \
+RUN wget -O /tmp/setup_for_emulator.sh https://raw.githubusercontent.com/rwbr/docker-flutter-ci/master/scripts/setup_for_emulator.sh \
     && chmod +x /tmp/setup_for_emulator.sh \
     && sh /tmp/setup_for_emulator.sh \
     && rm -rf /tmp/setup_for_emulator.sh;
 
-RUN mkdir -p $HOME/projects && cd $HOME/projects && wget -O /tmp/setup_vnc.sh https://raw.githubusercontent.com/bitsydarel/flutter-ci/master/scripts/setup_vnc.sh \
+RUN mkdir -p $HOME/projects && cd $HOME/projects && wget -O /tmp/setup_vnc.sh https://raw.githubusercontent.com/rwbr/docker-flutter-ci/master/scripts/setup_vnc.sh \
    && chmod +x /tmp/setup_vnc.sh \
    && sh /tmp/setup_vnc.sh \
    && rm -rf /tmp/setup_vnc.sh \
@@ -94,7 +94,7 @@ RUN touch /etc/ld.so.conf.d/android_libs.conf \
     && echo "$ANDROID_SDK_HOME/emulator/lib64/qt/lib" >> /etc/ld.so.conf.d/android_libs.conf \
     && echo "$ANDROID_SDK_HOME/emulator/lib64" >> /etc/ld.so.conf.d/android_libs.conf
 
-RUN wget -O /tmp/setup_gradle.sh https://raw.githubusercontent.com/bitsydarel/flutter-ci/master/scripts/setup_gradle.sh \
+RUN wget -O /tmp/setup_gradle.sh https://raw.githubusercontent.com/rwbr/docker-flutter-ci/master/scripts/setup_gradle.sh \
     && chmod +x /tmp/setup_gradle.sh \
     && sh /tmp/setup_gradle.sh \
     && rm -rf /tmp/setup_gradle.sh;
