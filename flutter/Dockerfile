@@ -16,6 +16,9 @@ RUN cd $TOOLS_HOME && git clone -b $FLUTTER_CHANNEL https://github.com/flutter/f
 
 ENV PATH ${PATH}:${FLUTTER_HOME}/bin:${FLUTTER_HOME}/bin/cache/dart-sdk/bin:$HOME/.pub-cache/bin
 
+RUN sdkmanager --install "cmdline-tools;latest"
+RUN flutter doctor --android-licenses
+RUN flutter config --no-enable-web
 RUN flutter doctor -v && pub global activate dbstyleguidechecker && pub global activate junitreport
 
 USER root
